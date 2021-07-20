@@ -5,7 +5,7 @@ This project collects ticker and fundamental data, and offers the consolidated d
 Stockdata is a custom Udacity Data Engineering Nanodegree capstone project. As such, it has corresponding requirements:
 
 ### Project Scope
-* Ticker data is fetched via AlphaVantage, whereas fundamentals data is fetched from SimFin. Minutely data is fetched for minimally 2 years from an universe of stock symbols and equates to ~ 2 million records per stock ticker.
+* Ticker data is fetched via AlphaVantage, whereas fundamentals data is fetched from SimFin. Minutely data is fetched for minimally 2 years from an universe of stock symbols and roughly equates to about 2 million records per stock ticker.
 * The end use cases for the organized data is for quantamental (quantitive + fundamental) analysis. This project builds the source of truth tables for the core data, as well as extended dimensions tables for technical indicators.
 * On top of data querys for reseach and analysis, the data is normalized to enable the building of a minutely backtester with corresponding fundamental events (i.e. company earnings report).
 
