@@ -12,6 +12,7 @@ Stockdata is a custom Udacity Data Engineering Nanodegree capstone project. As s
 ### Data Cleanup
 * Stock price data are missing on non-trading hours (i.e. after-hours, weekends, holidays), which is expected. The source data is already adjusted for dividends and splits so there is no processing required on that front. However, the API returns csv response that would need to be transformed to store in a relational database.
 * SimFin API endpoints provide "dimensions table" queries for various reports and such the "fact table" would need to be inferred and upserted. In additional normalizing data formats.
+* Some data entries from SimFin are numeric, while some are strings of the numbers, parseing is required for those entries.
 * API limitations: Since the free API access level is used for both AlphaVantage and SimFin, various query complexity and bulk limits apply, the ETL process need to detect missing data and batch queries to only the free-tier API spec.
 
 ### Data Model
