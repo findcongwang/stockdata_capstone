@@ -1,0 +1,26 @@
+version: '3.3'
+
+services:
+  stockdata-postgres:
+    image: postgres:13
+    command: postgres -c 'max_connections=500'
+    volumes:
+      - stockdata-postgres-data:/var/lib/postgres/data
+    environment:
+      - POSTGRES_USER=stockdata
+      - POSTGRES_PASSWORD=stockdata
+      - POSTGRES_MULTIPLE_DATABASES=stockdata
+    ports:
+      - 5432:5432
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U stockdata"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  stockdata-postgres-data:
+
+networks:
+  default:
+    name: stockdata_network

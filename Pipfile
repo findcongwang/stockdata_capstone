@@ -10,6 +10,7 @@ pytest = "*"
 setuptools = "*"
 stockdata-capstone = {editable = true, path = "."}
 sqlalchemy = "*"
+psycopg2 = "*"
 
 [dev-packages]
 

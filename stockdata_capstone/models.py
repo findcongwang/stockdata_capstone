@@ -1,3 +1,6 @@
+import os
+from dotenv import load_dotenv
+
 from sqlalchemy import create_engine
 from sqlalchemy import (
     Table, Column, Integer, String, Float,
@@ -6,7 +9,8 @@ from sqlalchemy import (
 )
 from sqlalchemy.ext.declarative import declarative_base
 
-engine = create_engine('sqlite:///stockdata.db', echo = True)
+DB_CONNECTION = os.environ.get("DB_CONNECTION")
+engine = create_engine(DB_CONNECTION, echo = True)
 Base = declarative_base()
 
 
@@ -69,8 +73,9 @@ class FinancialReport(Base):
 
 
 class ProfitLossReportData(Base):
+    __tablename__ = 'profit_loss_report_data'
     id = Column(Integer, primary_key=True)
-    financial_report_id = Column(Integer, ForeignKey('financial_report.id'), primary_key=True)
+    financial_report_id = Column(Integer, ForeignKey('financial_report.id'))
 
     revenue = Column(Float)                             # "Revenue"
     cost_revenue = Column(Float)                        # "Cost of Revenue"
@@ -104,8 +109,9 @@ class ProfitLossReportData(Base):
 
 
 class BalanceSheetReportData(Base):
+    __tablename__ = 'balance_sheet_report_data'
     id = Column(Integer, primary_key=True)
-    financial_report_id = Column(Integer, ForeignKey('financial_report.id'), primary_key=True)
+    financial_report_id = Column(Integer, ForeignKey('financial_report.id'))
 
     # "Cash, Cash Equivalents & Short Term Investments"
     cash_equivalents_st_investments = Column(Float)    
@@ -182,8 +188,9 @@ class BalanceSheetReportData(Base):
 
 
 class CashFlowReportData(Base):
+    __tablename__ = 'cash_flow_report_data'
     id = Column(Integer, primary_key=True)
-    financial_report_id = Column(Integer, ForeignKey('financial_report.id'), primary_key=True)
+    financial_report_id = Column(Integer, ForeignKey('financial_report.id'))
 
     net_income = Column(Float)                    # "Net Income\/Starting Line"
     depreciation_amortization = Column(Float)     # "Depreciation & Amortization"
@@ -241,11 +248,12 @@ class CashFlowReportData(Base):
 
 
 class DerivedReportData(Base):
+    __tablename__ = 'derived_report_data'
     id = Column(Integer, primary_key=True)
-    financial_report_id = Column(Integer, ForeignKey('financial_report.id'), primary_key=True)
+    financial_report_id = Column(Integer, ForeignKey('financial_report.id'))
 
     ebitda = Column(Float)                      # "EBITDA"
-    total_debt =  = Column(Float)               # "Total Debt"
+    total_debt = Column(Float)                  # "Total Debt"
     free_cash_flow = Column(Float)              # "Free Cash Flow"
     gross_profit_margin = Column(Float)         # "Gross Profit Margin"
     operating_margin = Column(Float)            # "Operating Margin"
@@ -289,4 +297,10 @@ class DerivedReportData(Base):
         }
 
 
-Base.metadata.create_all(engine)
+def main():
+    load_dotenv()
+    Base.metadata.create_all(engine)
+
+
+if __name__ == "__main__":
+    main()
