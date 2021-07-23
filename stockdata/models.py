@@ -96,6 +96,18 @@ class FinancialReport(Base):
     cash_flow = relationship("CashFlowReportData", back_populates="financial_report")
     derived_data = relationship("DerivedReportData", back_populates="financial_report")
 
+    @staticmethod
+    def simfin_property_lookup():
+        return {
+            "simfin_id": "SimFinId",
+            "fiscal_period": "Fiscal Period",
+            "fiscal_year": "Fiscal Year",
+            "report_date": "Report Date",
+            "publish_date": "Publish Date",
+            "restated_date": "Restated Date",
+            "source": "Source",
+        }
+
 
 class ProfitLossReportData(Base):
     __tablename__ = 'profit_loss_report_data'

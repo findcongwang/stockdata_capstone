@@ -9,7 +9,6 @@ from stockdata.models import (
     Candlestick1M, Candlestick1H, Candlestick1D
 )
 
-
 """
 Tests to be ran after the ETL process is triggered manually.
 """
