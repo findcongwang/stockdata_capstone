@@ -103,4 +103,7 @@ i.e. for each day, minutely data is queried and stepped through, whereas the fun
 
 Below is a DBeaver data dictionary for the postgres database.
 
+* All tables are owned by user `stockdata`.
+* Foreign key constraints are depicted by the lines between tables.
+
 ![data_dict](images/data_dictionary.png "Data Dictionary")
