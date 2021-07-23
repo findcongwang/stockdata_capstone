@@ -15,19 +15,55 @@ Stockdata is a custom Udacity Data Engineering Nanodegree capstone project. As s
 * Some data entries from SimFin are numeric, while some are strings of the numbers, parseing is required for those entries.
 * API limitations: Since the free API access level is used for both AlphaVantage and SimFin, various query complexity and bulk limits apply, the ETL process need to detect missing data and batch queries to only the free-tier API spec.
 
+### How to Run
+
+Copy `env.example` to `.env` and populate it with API keys from Alphavantage and SimFin (both are free). Make sure docker is installed on your system.
+
+```
+# install pipenv
+pip install pipenv --user
+
+# activate the virtual environment
+pipenv shell
+
+# install dependencies
+pipenv sync
+
+# start docker container for postgres db
+docker-compose up -d
+
+# seed the initial list of assets
+python stockdata/seed.py
+
+# fetch candlesticks
+python stockdata/utils/alphavantage_loader.py
+
+# fetch fundamentals
+python stockdata/utils/simfin_loader.py
+
+# run pytest, all cases should pass
+pytest
+```
+
 ### Data Model
-* === TODO: Data schema
-* === TODO: transformation steps
+
+Overall Schema
+![general_erd](images/stockdata_erd.png "Stockdata ERD")
+
+Financial report details
+![fundaments_erd](images/fundamentals_erd.png "Fundamentals ERD")
 
 ### ETL Pipeline
-* === TODO: folder structure with etl.py and /data directory
-* === TODO: list our data integrity checks and pytest coverage, test summary
+* DAGs are found under `/dags` folder, airflow will be installed after `pipenv sync` in the local virtual environment. Remember to update dags_folder in airflow.cfg to see the dags.
+* `update_candlesticks` is scheduled daily
+* `update_fundamentals` is scheduled monthly
+
+![etl_design](images/etl_dags_design.png "ETL Design")
+
 
 ### Tech Stack Rationale
 
 Apache Airflow is used to schedule and perform ETL to fetch data from remote sources and keep the data up-to-date. The goal here to gather historical factual data to further analysis, since we want to have flexible queries (for research), a relational database makes sense.
-
-(A sqlite database is used for ease of demonstration, a postgres database with corresponding Airflow connectors would be used in production.)
 
 The model was chosen to reflect the nature of the data. I.e. factual occurances for historical prices and financial reports, and additional dimensions of derived data. For example, a star-schema is used for financial reports per company, per quarter.
 
