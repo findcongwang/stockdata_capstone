@@ -1,10 +1,10 @@
-import setuptools
+from setuptools import find_packages, setup
 
 with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
-setuptools.setup(
-    name="stockdata_capstone",
+setup(
+    name="stockdata",
     version="0.0.1",
     author="Francis C. Wang",
     author_email="findcongwang@gmail.com",
@@ -20,7 +20,5 @@ setuptools.setup(
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
-    package_dir={"": "stockdata_capstone"},
-    packages=setuptools.find_packages(where="stockdata_capstone"),
-    python_requires=">=3.9",
+    packages=find_packages(),
 )

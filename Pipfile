@@ -8,9 +8,13 @@ apache-airflow = "*"
 python-dotenv = "*"
 pytest = "*"
 setuptools = "*"
-stockdata-capstone = {editable = true, path = "."}
+stockdata = {editable = true, path = "."}
 sqlalchemy = "*"
 psycopg2 = "*"
+requests = "*"
+pandas = "*"
+numpy = "*"
+pendulum = "*"
 
 [dev-packages]
 

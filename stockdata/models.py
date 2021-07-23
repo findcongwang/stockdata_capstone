@@ -2,6 +2,8 @@ import os
 from dotenv import load_dotenv
 
 from sqlalchemy import create_engine
+from sqlalchemy.orm import relationship, sessionmaker
+
 from sqlalchemy import (
     Table, Column, Integer, String, Float,
     Date, DateTime, 
@@ -11,7 +13,9 @@ from sqlalchemy.ext.declarative import declarative_base
 
 DB_CONNECTION = os.environ.get("DB_CONNECTION")
 engine = create_engine(DB_CONNECTION, echo = True)
+Session = sessionmaker(bind=engine)
 Base = declarative_base()
+session = Session()
 
 
 ## --- Universe Models ---
@@ -21,6 +25,15 @@ class Asset(Base):
     name = Column(String)
     symbol = Column(String)
     asset_type = Column(String)
+    
+    # constriants
+    asset_uniq = UniqueConstraint('symbol', name='asset_name_uniq')
+
+    # relationships
+    candlestick_1m = relationship("Candlestick1M", back_populates="asset")
+    candlestick_1h = relationship("Candlestick1H", back_populates="asset")
+    candlestick_1d = relationship("Candlestick1D", back_populates="asset")
+    financial_reports = relationship("FinancialReport", back_populates="asset")
 
 
 ## --- Price Data Models ---
@@ -33,6 +46,7 @@ class Candlestick1M(Base):
     low = Column(Float, nullable=False)
     close = Column(Float, nullable=False)
     volume = Column(Integer, nullable=False)
+    asset = relationship("Asset", back_populates="candlestick_1m")
 
 
 class Candlestick1H(Base):
@@ -44,6 +58,7 @@ class Candlestick1H(Base):
     low = Column(Float, nullable=False)
     close = Column(Float, nullable=False)
     volume = Column(Integer, nullable=False)
+    asset = relationship("Asset", back_populates="candlestick_1h")
 
 
 class Candlestick1D(Base):
@@ -55,6 +70,7 @@ class Candlestick1D(Base):
     low = Column(Float, nullable=False)
     close = Column(Float, nullable=False)
     volume = Column(Integer, nullable=False)
+    asset = relationship("Asset", back_populates="candlestick_1d")
 
 
 ## --- Fundamental Data Models ---
@@ -69,7 +85,16 @@ class FinancialReport(Base):
     publish_date = Column(Date)
     restated_date = Column(Date)
     source = Column(String)
-    simfin_uniq = UniqueConstraint('simfin_id', name='simfin_idx')
+
+    # constriants
+    simfin_id_uniq = UniqueConstraint('simfin_id', name='simfin_id_uniq')
+
+    # relationships
+    asset = relationship("Asset", back_populates="financial_reports")
+    profit_loss = relationship("ProfitLossReportData", back_populates="financial_report")
+    balance_sheet = relationship("BalanceSheetReportData", back_populates="financial_report")
+    cash_flow = relationship("CashFlowReportData", back_populates="financial_report")
+    derived_data = relationship("DerivedReportData", back_populates="financial_report")
 
 
 class ProfitLossReportData(Base):
@@ -89,6 +114,7 @@ class ProfitLossReportData(Base):
     income_tax_expense_net = Column(Float)              # "Income Tax (Expense) Benefit Net"
     net_income = Column(Float)                          # "Net Income"
     net_income_common = Column(Float)                   # "Net Income (Common)"
+    financial_report = relationship("FinancialReport", back_populates="profit_loss")
 
     @staticmethod
     def simfin_property_lookup():
@@ -147,6 +173,7 @@ class BalanceSheetReportData(Base):
     equity_before_minority_interest = Column(Float)     # "Equity Before Minority Interest"
     total_equity = Column(Float)                        # "Total Equity"
     total_liabilities_equity = Column(Float)            # "Total Liabilities & Equity"
+    financial_report = relationship("FinancialReport", back_populates="balance_sheet")
 
     @staticmethod
     def simfin_property_lookup():
@@ -216,6 +243,7 @@ class CashFlowReportData(Base):
     net_cash_before_op_forex = Column(Float)      # "Net Cash Before Disc. Operations and FX"
     net_cash_before_fx = Column(Float)            # "Net Cash Before FX"
     net_cash_in_cash = Column(Float)              # "Net Change in Cash"
+    financial_report = relationship("FinancialReport", back_populates="cash_flow")
 
     @staticmethod
     def simfin_property_lookup():
@@ -271,6 +299,7 @@ class DerivedReportData(Base):
     free_cash_flow_per_share = Column(Float)    # "Free Cash Flow Per Share"
     dividends_per_share = Column(Float)         # "Dividends Per Share"
     pietroski_f_score = Column(Float)           # "Pietroski F-Score"
+    financial_report = relationship("FinancialReport", back_populates="derived_data")
 
     @staticmethod
     def simfin_property_lookup():
