@@ -87,9 +87,15 @@ In this case, we could consider some use case / query optimized tables, or switc
 
 #### Fetching hourly data to compute indicators
 
+Users can query either resolution of the data to compute indicators using for example, TA-Lib https://mrjbq7.github.io/ta-lib/
+
 ![aapl_hourly](images/get_hourly_candles.png "AAPL Hourly")
 
 #### Simulating report publishing in backtest
+
+Users can query all the details of a financial report (100+ columns when joined) and make the data available only on the report's publish date in a backtest loop.
+
+i.e. for each day, minutely data is queried and stepped through, whereas the fundamentals data released on each minute is `None`, until the time in which the financial report's publishing date coincides. This ensure any algorithms being backtested do not have "future" data.
 
 ![aapl_reports](images/get_fundamentals.png "AAPL Reports")
 
