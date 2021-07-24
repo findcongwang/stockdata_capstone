@@ -104,7 +104,7 @@ i.e. for each day, minutely data is queried and stepped through, whereas the fun
 Below is the annotated model definitions and DBeaver data dictionary for the postgres database.
 
 * All tables are owned by user `stockdata`.
-* column descriptions on commented inline
+* Column descriptions on commented inline.
 
 ```python
 class Asset(Base):
@@ -221,30 +221,30 @@ class CashFlowReportData(Base):
     id = Column(Integer, primary_key=True)
     financial_report_id = Column(Integer, ForeignKey('financial_report.id'))
 
-    net_income = Column(Float)                    # "Net Income\/Starting Line"
-    depreciation_amortization = Column(Float)     # "Depreciation & Amortization"
-    non_cash_items = Column(Float)                # "Non-Cash Items"
-    change_working_capital = Column(Float)        # "Change in Working Capital"
-    net_cash_from_operating = Column(Float)       # "Net Cash from Operating Activities"
-    change_in_fixed_assets = Column(Float)        # "Change in Fixed Assets & Intangibles"
-    acquisition_fixed_assets = Column(Float)      # "Acquisition of Fixed Assets & Intangibles"
-    net_change_lt_investment = Column(Float)      # "Net Change in Long Term Investment"
-    decrease_lt_investment = Column(Float)        # "Decrease in Long Term Investment"
-    increase_lt_investment = Column(Float)        # "Increase in Long Term Investment"
-    net_cash_acquisitions = Column(Float)         # "Net Cash from Acquisitions & Divestitures"
-    other_investing_activities = Column(Float)    # "Other Investing Activities"
-    net_cash_investing_activies = Column(Float)   # "Net Cash from Investing Activities"
-    dividents_paid = Column(Float)                # "Dividends Paid"
-    cash_from_debt = Column(Float)                # "Cash from (Repayment of) Debt"
-    cash_from_dt_debt_net = Column(Float)         # "Cash from (Repayment of) Short Term Debt Net"
-    cash_from_equity = Column(Float)              # "Cash from (Repurchase of) Equity"
-    increase_capital_stock = Column(Float)        # "Increase in Capital Stock"
-    decrease_capital_stock = Column(Float)        # "Decrease in Capital Stock"
-    other_financing_activities = Column(Float)    # "Other Financing Activities"
-    net_cash_financing_activities = Column(Float) # "Net Cash from Financing Activities"
-    net_cash_before_op_forex = Column(Float)      # "Net Cash Before Disc. Operations and FX"
-    net_cash_before_fx = Column(Float)            # "Net Cash Before FX"
-    net_cash_in_cash = Column(Float)              # "Net Change in Cash"
+    net_income = Column(Float)                          # "Net Income\/Starting Line"
+    depreciation_amortization = Column(Float)           # "Depreciation & Amortization"
+    non_cash_items = Column(Float)                      # "Non-Cash Items"
+    change_working_capital = Column(Float)              # "Change in Working Capital"
+    net_cash_from_operating = Column(Float)             # "Net Cash from Operating Activities"
+    change_in_fixed_assets = Column(Float)              # "Change in Fixed Assets & Intangibles"
+    acquisition_fixed_assets = Column(Float)            # "Acquisition of Fixed Assets & Intangibles"
+    net_change_lt_investment = Column(Float)            # "Net Change in Long Term Investment"
+    decrease_lt_investment = Column(Float)              # "Decrease in Long Term Investment"
+    increase_lt_investment = Column(Float)              # "Increase in Long Term Investment"
+    net_cash_acquisitions = Column(Float)               # "Net Cash from Acquisitions & Divestitures"
+    other_investing_activities = Column(Float)          # "Other Investing Activities"
+    net_cash_investing_activies = Column(Float)         # "Net Cash from Investing Activities"
+    dividents_paid = Column(Float)                      # "Dividends Paid"
+    cash_from_debt = Column(Float)                      # "Cash from (Repayment of) Debt"
+    cash_from_dt_debt_net = Column(Float)               # "Cash from (Repayment of) Short Term Debt Net"
+    cash_from_equity = Column(Float)                    # "Cash from (Repurchase of) Equity"
+    increase_capital_stock = Column(Float)              # "Increase in Capital Stock"
+    decrease_capital_stock = Column(Float)              # "Decrease in Capital Stock"
+    other_financing_activities = Column(Float)          # "Other Financing Activities"
+    net_cash_financing_activities = Column(Float)       # "Net Cash from Financing Activities"
+    net_cash_before_op_forex = Column(Float)            # "Net Cash Before Disc. Operations and FX"
+    net_cash_before_fx = Column(Float)                  # "Net Cash Before FX"
+    net_cash_in_cash = Column(Float)                    # "Net Change in Cash"
     financial_report = relationship("FinancialReport", back_populates="cash_flow")
 
 
@@ -253,27 +253,26 @@ class DerivedReportData(Base):
     id = Column(Integer, primary_key=True)
     financial_report_id = Column(Integer, ForeignKey('financial_report.id'))
 
-    ebitda = Column(Float)                        # "EBITDA"
-    total_debt = Column(Float)                    # "Total Debt"
-    free_cash_flow = Column(Float)                # "Free Cash Flow"
-    gross_profit_margin = Column(Float)           # "Gross Profit Margin"
-    operating_margin = Column(Float)              # "Operating Margin"
-    net_profit_marge = Column(Float)              # "Net Profit Margin"
-    return_on_equity = Column(Float)              # "Return on Equity"
-    return_on_assets = Column(Float)              # "Return on Assets"
-    free_cash_flow_net = Column(Float)            # "Free Cash Flow to Net Income"
-    current_ratio = Column(Float)                 # "Current Ratio"
-    liabilities_equity_ratio = Column(Float)      # "Liabilities to Equity Ratio"
-    debt_ratio = Column(Float)                    # "Debt Ratio"
-    earnings_per_share_basic = Column(Float)      # "Earnings Per Share Basic"
-    earnings_per_share_diluted = Column(Float)    # "Earnings Per Share Diluted"
-    sales_per_share = Column(Float)               # "Sales Per Share"
-    equity_per_share = Column(Float)              # "Equity Per Share"
-    free_cash_flow_per_share = Column(Float)      # "Free Cash Flow Per Share"
-    dividends_per_share = Column(Float)           # "Dividends Per Share"
-    pietroski_f_score = Column(Float)             # "Pietroski F-Score"
+    ebitda = Column(Float)                              # "EBITDA"
+    total_debt = Column(Float)                          # "Total Debt"
+    free_cash_flow = Column(Float)                      # "Free Cash Flow"
+    gross_profit_margin = Column(Float)                 # "Gross Profit Margin"
+    operating_margin = Column(Float)                    # "Operating Margin"
+    net_profit_marge = Column(Float)                    # "Net Profit Margin"
+    return_on_equity = Column(Float)                    # "Return on Equity"
+    return_on_assets = Column(Float)                    # "Return on Assets"
+    free_cash_flow_net = Column(Float)                  # "Free Cash Flow to Net Income"
+    current_ratio = Column(Float)                       # "Current Ratio"
+    liabilities_equity_ratio = Column(Float)            # "Liabilities to Equity Ratio"
+    debt_ratio = Column(Float)                          # "Debt Ratio"
+    earnings_per_share_basic = Column(Float)            # "Earnings Per Share Basic"
+    earnings_per_share_diluted = Column(Float)          # "Earnings Per Share Diluted"
+    sales_per_share = Column(Float)                     # "Sales Per Share"
+    equity_per_share = Column(Float)                    # "Equity Per Share"
+    free_cash_flow_per_share = Column(Float)            # "Free Cash Flow Per Share"
+    dividends_per_share = Column(Float)                 # "Dividends Per Share"
+    pietroski_f_score = Column(Float)                   # "Pietroski F-Score"
     financial_report = relationship("FinancialReport", back_populates="derived_data")
 ```
-
 
 ![data_dict](images/data_dictionary.png "Data Dictionary")
