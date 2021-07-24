@@ -22,9 +22,9 @@ session = Session()
 class Asset(Base):
     __tablename__ = 'asset'
     id = Column(Integer, primary_key=True)
-    name = Column(String)
-    symbol = Column(String)
-    asset_type = Column(String)
+    name = Column(String)                               # name of the asset / corporation
+    symbol = Column(String)                             # unique identifier and ticker
+    asset_type = Column(String)                         # type, one of stock / forex
     
     # constriants
     asset_uniq = UniqueConstraint('symbol', name='asset_name_uniq')
@@ -40,12 +40,12 @@ class Asset(Base):
 class Candlestick1M(Base):
     __tablename__ = 'candlestick_1m'
     asset_id = Column(Integer, ForeignKey('asset.id'), primary_key=True)
-    timestamp = Column(DateTime, primary_key=True)
-    open = Column(Float, nullable=False)
-    high = Column(Float, nullable=False)
-    low = Column(Float, nullable=False)
-    close = Column(Float, nullable=False)
-    volume = Column(Integer, nullable=False)
+    timestamp = Column(DateTime, primary_key=True)      # timestamp of the candlestick
+    open = Column(Float, nullable=False)                # opening price
+    high = Column(Float, nullable=False)                # highest price in the duration
+    low = Column(Float, nullable=False)                 # lowest price in the duration
+    close = Column(Float, nullable=False)               # closing price
+    volume = Column(Integer, nullable=False)            # total volume in the duration
     asset = relationship("Asset", back_populates="candlestick_1m")
 
 
@@ -78,13 +78,13 @@ class FinancialReport(Base):
     __tablename__ = 'financial_report'
     id = Column(Integer, primary_key=True)
     asset_id = Column(Integer, ForeignKey('asset.id'))
-    simfin_id = Column(String)
-    fiscal_period = Column(String)
-    fiscal_year = Column(Integer)
-    report_date = Column(Date)
-    publish_date = Column(Date)
-    restated_date = Column(Date)
-    source = Column(String)
+    simfin_id = Column(String)                          # SimFin uniq report id
+    fiscal_period = Column(String)                      # Fiscal Period, one of [Q1, Q2, Q3, Q4]
+    fiscal_year = Column(Integer)                       # Fiscal Year
+    report_date = Column(Date)                          # Report Date
+    publish_date = Column(Date)                         # Published Date
+    restated_date = Column(Date)                        # Restated Date (i.e. revision)
+    source = Column(String)                             # Source document URI
 
     # constriants
     simfin_id_uniq = UniqueConstraint('simfin_id', name='simfin_id_uniq')
