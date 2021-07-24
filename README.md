@@ -136,13 +136,13 @@ class FinancialReport(Base):
     __tablename__ = 'financial_report'
     id = Column(Integer, primary_key=True)
     asset_id = Column(Integer, ForeignKey('asset.id'))
-    simfin_id = Column(String)                          # SimFin uniq report id
-    fiscal_period = Column(String)                      # Fiscal Period, one of [Q1, Q2, Q3, Q4]
-    fiscal_year = Column(Integer)                       # Fiscal Year
-    report_date = Column(Date)                          # Report Date
-    publish_date = Column(Date)                         # Published Date
-    restated_date = Column(Date)                        # Restated Date (i.e. revision)
-    source = Column(String)                             # Source document URI
+    simfin_id = Column(String, nullable=False)          # SimFin uniq report id
+    fiscal_period = Column(String, nullable=False)      # Fiscal Period, one of [Q1, Q2, Q3, Q4]
+    fiscal_year = Column(Integer, nullable=False)       # Fiscal Year
+    report_date = Column(Date, nullable=False)          # Report Date
+    publish_date = Column(Date, nullable=False)         # Published Date
+    restated_date = Column(Date, nullable=False)        # Restated Date (i.e. revision)
+    source = Column(String, nullable=False)             # Source document URI
 
     # constriants
     simfin_id_uniq = UniqueConstraint('simfin_id', name='simfin_id_uniq')
